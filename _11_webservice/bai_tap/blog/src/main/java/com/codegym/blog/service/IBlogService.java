@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface IBlogService {
     Page<Blog> findAll(Pageable pageable);
+    List<Blog> findAll();
     void save(Blog blog);
     void update(Blog blog);
     void remove(Long id);

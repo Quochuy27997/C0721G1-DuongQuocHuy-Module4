@@ -21,16 +21,18 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 public class BlogRestController {
-    @Autowired
-    ICategoryService iCategoryService;
+
     @Autowired
     IBlogService iBlogService;
 
-    @GetMapping("/category")
-    public List<Category> getListCategory() {
-        return iCategoryService.findAll();
+    //hien thi tat ca
+    @GetMapping("/blog")
+    public List<Blog> getListBlog() {
+        List<Blog> blogList = iBlogService.findAll();
+        return blogList;
     }
 
+    //phan trang
     @GetMapping("/blog/{page}/{size}")
     public ResponseEntity<?> getListBlog(@PathVariable int page, @PathVariable int size) {
         Page<Blog> blogPage = iBlogService.findAll(PageRequest.of(page, size));
@@ -39,18 +41,26 @@ public class BlogRestController {
         return new ResponseEntity<>(blogPage, HttpStatus.OK);
     }
 
+    //them moi
     @GetMapping("/blog/create")
     public ResponseEntity<Blog> createBlog(@RequestBody Blog blog) {
-//        Page<Blog> blogPage=iBlogService.findAll(PageRequest.of(page,size));
         iBlogService.save(blog);
         return new ResponseEntity<>(blog, HttpStatus.CREATED);
     }
 
+    //update
     @PatchMapping("/blog/update")
     public ResponseEntity<?> updateBlog(@RequestBody Blog blog) {
-   iBlogService.update(blog);
+        iBlogService.update(blog);
         return new ResponseEntity<>(blog, HttpStatus.OK);
     }
-    
+
+    //xoa
+    @DeleteMapping("/blog/delete/{id}")
+    public ResponseEntity<?> updateBlog(@PathVariable("id") Long id) {
+        iBlogService.remove(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }
