@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public void remove(Long id) {
-        iCategoryRepository.delete(findById(id));
+        iCategoryRepository.deleteById(id);
     }
 
     @Override

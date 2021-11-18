@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/customers/edit-customer}" th:object="${customer}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <table>
+        <tr>
+            <td>Code</td>
+            <td><input type="text" th:field="*{code}"></td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td><input type="text" th:field="*{name}"></td>
+        </tr>
+        <tr>
+            <td>Birthday</td>
+            <td><input type="text" th:field="*{birthDate}"></td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+            <td>
+                <input type="radio" th:field="*{gender}" value="0">Male
+                <input type="radio" th:field="*{gender}" value="1">Female
+                <input type="radio" th:field="*{gender}" value="2">LGBT
+            </td>
+        </tr>
+        <tr>
+            <td>ID Card</td>
+            <td><input type="text" th:field="*{idCard}"></td>
+        </tr>
+        <tr>
+            <td>Phone</td>
+            <td><input type="text" th:field="*{phone}"></td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td><input type="text" th:field="*{email}"></td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td><input type="text" th:field="*{address}"></td>
+        </tr>
+        <tr>
+            <td>
+                Customer Type
+            </td>
+            <td>
+                <select th:field="*{customerType}">
+
+                    <option th:each="customertype:${customerTypeList}" th:text="${customertype.name}"
+                            th:value="${customertype.id}">
+
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+
+            <td colspan="2"><input type="submit" value="Update"></td>
+        </tr>
+    </table>
+</form>
+<div><a th:href="@{/customers}">back to list</a></div>
+</body>
+</html>

@@ -7,6 +7,7 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String code;
     private String name;
     private String birthDate;
     private int gender;
@@ -18,8 +19,10 @@ public class Customer {
     @JoinColumn(name = "customerType_id",referencedColumnName = "id")
     private CustomerType customerType;
 
-    public Customer(String name, String birthDate, int gender, String idCard, String phone, String email, String address, CustomerType customerType) {
+    public Customer(String name, String code, String birthDate, int gender, String idCard, String phone, String email, String address, CustomerType customerType) {
+        this.code = code;
         this.name = name;
+
         this.birthDate = birthDate;
         this.gender = gender;
         this.idCard = idCard;
@@ -38,6 +41,14 @@ public class Customer {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
