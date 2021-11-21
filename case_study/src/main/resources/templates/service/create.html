@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div><a th:href="@{/service}">back to list</a></div>
+<form th:action="@{/service/create-service}" th:object="${appService}" method="post">
+    <table>
+        <tr>
+            <td>Code</td>
+            <td><input type="text" th:field="*{code}"></td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td><input type="text" th:field="*{name}"></td>
+        </tr>
+        <tr>
+            <td>Area</td>
+            <td><input type="text" th:field="*{area}"></td>
+        </tr>
+        <tr>
+            <td>Cost</td>
+            <td><input type="text" th:field="*{cost}"></td>
+        </tr>
+        <tr>
+            <td>max people</td>
+            <td><input type="text" th:field="*{maxPeople}"></td>
+        </tr>
+
+        <td>
+            <select th:field="*{rentType}">
+
+                <option th:each="renttype:${rentTypeList}" th:text="${renttype.name}"
+                        th:value="${renttype.id}">
+
+                </option>
+            </select>
+        </td>
+
+        <td>
+            <select th:field="*{serviceType}">
+
+                <option th:each="servicetype:${serviceTypeList}" th:text="${servicetype.name}"
+                        th:value="${servicetype.id}">
+
+                </option>
+            </select>
+        </td>
+
+        <tr>
+            <td>Room Standard</td>
+            <td><input type="text" th:field="*{roomStandard}"></td>
+        </tr>
+        <tr>
+            <td>Convenient</td>
+            <td><input type="text" th:field="*{convenient}"></td>
+        </tr>
+        <tr>
+            <td>Pool Area</td>
+            <td><input type="text" th:field="*{poolArea}"></td>
+        </tr>
+        <tr>
+            <td>number Of Floors</td>
+            <td><input type="text" th:field="*{numberOfFloors}"></td>
+        </tr>
+
+
+        <tr>
+
+            <td colspan="2"><input type="submit" value="Create"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

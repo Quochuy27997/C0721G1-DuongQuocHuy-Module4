@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 @Service
 @Transactional
-public class CustomerTypeService implements ICustomerTypeService {
+public class CustomerTypeServiceImpl implements ICustomerTypeService {
     @Autowired
     ICustomerTypeRepository iCustomerTypeRepository;
     @Override

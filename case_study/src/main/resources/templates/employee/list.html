@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Blog</h1>
+<a href="/employee/create-employee">Add</a>
+<form>
+    <input type="search" name="name" placeholder="search by name">
+    <select name="idPosition">
+        <option selected value="">Chọn</option>
+
+        <option th:each="position:${positionList}" th:text="${position.name}" th:value="${position.id}">
+
+        </option>
+
+    </select>
+    <select name="idPosition">
+        <option selected value="">Chọn</option>
+
+        <option th:each="position:${positionList}" th:text="${position.name}" th:value="${position.id}">
+
+        </option>
+
+    </select><select name="idEducationDegree">
+    <option selected value="">Chọn</option>
+
+    <option th:each="educationDegree:${educationDegreeList}" th:text="${educationDegree.name}" th:value="${educationDegree.id}">
+
+    </option>
+
+</select>
+    <select name="idDivision">
+        <option selected value="">Chọn</option>
+
+        <option th:each="division:${divisionList}" th:text="${division.name}" th:value="${division.id}">
+
+        </option>
+
+    </select>
+
+    <input type="submit" value="Search">
+</form>
+<table>
+    <tr>
+        <td>STT</td>
+        <td>Code</td>
+        <th>Name</th>
+        <th>Birthday</th>
+        <th>idCard</th>
+        <th>Salary</th>
+
+        <th>phone</th>
+        <th>email</th>
+        <th>address</th>
+        <th>Position</th>
+        <th>Education Degree</th>
+        <th>Division</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="employee,index:${employeeList}">
+        <td th:text="${employee.id}"></td>
+        <td th:text="${employee.code}"></td>
+        <td th:text="${employee.name}"></td>
+        <td th:text="${employee.birthDate}"></td>
+        <td th:text="${employee.salary}"></td>
+        <td th:text="${employee.phone}"></td>
+        <td th:text="${employee.email}"></td>
+        <td th:text="${employee.address}"></td>
+        <td th:text="${employee.position.name}"></td>
+        <td th:text="${employee.educationDegree.name}"></td>
+        <td th:text="${employee.division.name}"></td>
+
+        <td><a th:href="@{/employee/edit-employee/{id}(id=${employee.id})}">Edit</a></td>
+        <td><a th:href="@{/employee/delete-employee/{id}(id=${employee.id})}">Delete</a></td>
+
+
+    </tr>
+</table>
+<div>
+    <a th:if="${employeeList.hasPrevious() }"
+       th:href="@{'/employee'(page=${employeeList.number-1},name=${name},idCustomerType=${customerTypeId})}">previous</a>
+    <span th:text="${employeeList.number+1}"></span>/<span th:text="${employeeList.totalPages}"></span>
+    <a th:if="${employeeList.hasNext()}"
+       th:href="@{'/employee'(page=${customerList.number+1},name=${name},idCustomerType=${customerTypeId})}">Next</a>
+</div>
+
+</body>
+</html>

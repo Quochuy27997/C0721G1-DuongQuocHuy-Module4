@@ -1,6 +1,7 @@
 package com.codegym.casestudy.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Customer {
@@ -9,6 +10,7 @@ public class Customer {
     private Long id;
     private String code;
     private String name;
+    @Column(columnDefinition = "Date")
     private String birthDate;
     private int gender;
     private String idCard;
@@ -18,6 +20,8 @@ public class Customer {
     @ManyToOne(targetEntity = CustomerType.class,cascade = CascadeType.ALL)
     @JoinColumn(name = "customerType_id",referencedColumnName = "id")
     private CustomerType customerType;
+    @OneToMany(mappedBy = "customer")
+    private List<Contract> contractList;
 
     public Customer(String name, String code, String birthDate, int gender, String idCard, String phone, String email, String address, CustomerType customerType) {
         this.code = code;
@@ -30,6 +34,27 @@ public class Customer {
         this.email = email;
         this.address = address;
         this.customerType = customerType;
+    }
+
+    public Customer(String code, String name, String birthDate, int gender, String idCard, String phone, String email, String address, CustomerType customerType, List<Contract> contractList) {
+        this.code = code;
+        this.name = name;
+        this.birthDate = birthDate;
+        this.gender = gender;
+        this.idCard = idCard;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.customerType = customerType;
+        this.contractList = contractList;
+    }
+
+    public List<Contract> getContractList() {
+        return contractList;
+    }
+
+    public void setContractList(List<Contract> contractList) {
+        this.contractList = contractList;
     }
 
     public Customer() {

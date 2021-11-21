@@ -10,5 +10,5 @@ import org.springframework.data.repository.query.Param;
 
 public interface ICustomerRepository extends JpaRepository<Customer,Long> {
     @Query(value="select * from customer where name like :name and customer_type_id like :id",nativeQuery=true)
-    Page<Customer> searchAll(Pageable pageable, @Param("name") String title, @Param("id") String idCategory);
+    Page<Customer> searchAll(Pageable pageable, @Param("name") String name, @Param("id") String customerTypeId);
 }

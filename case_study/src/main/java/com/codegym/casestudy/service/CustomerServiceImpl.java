@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 @Service
 @Transactional
-public class CustomerService implements ICustomerService {
+public class CustomerServiceImpl implements ICustomerService {
 @Autowired
     ICustomerRepository iCustomerRepository;
 

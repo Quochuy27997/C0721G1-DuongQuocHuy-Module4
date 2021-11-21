@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Blog</h1>
+<a href="/service/create-service">Add</a>
+<table>
+    <tr>
+        <td>STT</td>
+        <td>Code</td>
+        <th>Name</th>
+        <th>Area</th>
+        <th>Cost</th>
+        <th>MaX People</th>
+        <th>Rent Type</th>
+        <th>Service Type</th>
+        <th>Room Standard</th>
+        <th>Convenient</th>
+        <th>Pool Area</th>
+        <th>number Of Floors</th>
+
+    </tr>
+    <tr th:each="appService,index:${appServiceList}">
+        <td th:text="${appService.id}"></td>
+        <td th:text="${appService.code}"></td>
+        <td th:text="${appService.name}"></td>
+        <td th:text="${appService.area}"></td>
+        <td th:text="${appService.cost}"></td>
+        <td th:text="${appService.maxPeople}"></td>
+        <td th:text="${appService.rentType.name}"></td>
+        <td th:text="${appService.serviceType.name}"></td>
+        <td th:text="${appService.roomStandard}"></td>
+        <td th:text="${appService.convenient}"></td>
+        <td th:text="${appService.poolArea}"></td>
+        <td th:text="${appService.numberOfFloors}"></td>
+
+
+    </tr>
+</table>
+<div>
+    <a th:if="${appServiceList.hasPrevious() }"
+       th:href="@{'/service'(page=${appServiceList.number-1})}">previous</a>
+    <span th:text="${appServiceList.number+1}"></span>/<span th:text="${appServiceList.totalPages}"></span>
+    <a th:if="${appServiceList.hasNext()}"
+       th:href="@{'/service'(page=${appServiceList.number+1})}">Next</a>
+</div>
+
+</body>
+</html>

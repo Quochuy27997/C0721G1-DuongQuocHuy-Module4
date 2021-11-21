@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div><a th:href="@{/contract}">back to list</a></div>
+<form th:action="@{/contract/create-contract}" th:object="${contract}" method="post">
+    <table>
+        <tr>
+            <td>Start day</td>
+            <td><input type="date" th:field="*{startDate}"></td>
+        </tr>
+        <tr>
+            <td>End day</td>
+            <td><input type="date" th:field="*{endDate}"></td>
+        </tr>
+        <tr>
+            <td>Deposit</td>
+            <td><input type="text" th:field="*{deposit}"></td>
+        </tr>
+        <tr>
+            <td>Total Money</td>
+            <td><input type="text" th:field="*{totalMoney}"></td>
+        </tr>
+
+
+        <td>
+            <select th:field="*{customer}">
+
+                <option th:each="customer:${customerList}" th:text="${customer.name}"
+                        th:value="${customer.id}">
+
+                </option>
+            </select>
+        </td>
+
+        <td>
+            <select th:field="*{employee}">
+
+                <option th:each="employee:${employeeList}" th:text="${employee.name}"
+                        th:value="${employee.id}">
+
+                </option>
+            </select>
+        </td>
+        <td>
+            <select th:field="*{appService}">
+
+                <option th:each="appService:${appServiceList}" th:text="${appService.name}"
+                        th:value="${appService.id}">
+
+                </option>
+            </select>
+        </td>
+
+
+        <tr>
+
+            <td colspan="2"><input type="submit" value="Create"></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
