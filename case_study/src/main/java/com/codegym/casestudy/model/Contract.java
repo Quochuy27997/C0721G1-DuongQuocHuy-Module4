@@ -1,12 +1,12 @@
 package com.codegym.casestudy.model;
 
 
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.*;
+import java.util.List;
+
 @Entity
 public class Contract {
-//    @javax.persistence.Id
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,7 +25,27 @@ public class Contract {
     @ManyToOne
     @JoinColumn(name = "appService", referencedColumnName = "id")
     private AppService appService;
+    @OneToMany(mappedBy = "contract")
+    private List<ContractDetail> contractDetailList;
 
+    public List<ContractDetail> getContractDetailList() {
+        return contractDetailList;
+    }
+
+    public void setContractDetailList(List<ContractDetail> contractDetailList) {
+        this.contractDetailList = contractDetailList;
+    }
+
+    public Contract(String startDate, String endDate, double deposit, double totalMoney, Customer customer, Employee employee, AppService appService, List<ContractDetail> contractDetailList) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.deposit = deposit;
+        this.totalMoney = totalMoney;
+        this.customer = customer;
+        this.employee = employee;
+        this.appService = appService;
+        this.contractDetailList = contractDetailList;
+    }
 
     public Contract() {
     }

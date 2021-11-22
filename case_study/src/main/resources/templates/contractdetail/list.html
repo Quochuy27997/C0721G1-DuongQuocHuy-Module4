@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Blog</h1>
+<a href="/contractdetail/create-contractdetail">Add</a>
+<table>
+    <tr>
+        <td>STT</td>
+        <td>Contract</td>
+        <th>Attach Service</th>
+        <th>Quantity</th>
+
+
+    </tr>
+    <tr th:each="contractdetail,index:${contractDetailList}">
+        <td th:text="${contractdetail.id}"></td>
+        <td th:text="${contractdetail.contract.id}"></td>
+        <td th:text="${contractdetail.attachService.name}"></td>
+        <td th:text="${contractdetail.quantity}"></td>
+
+
+    </tr>
+</table>
+<div>
+    <a th:if="${contractDetailList.hasPrevious() }"
+       th:href="@{'/contractdetail'(page=${contractDetailList.number-1})}">previous</a>
+    <span th:text="${contractDetailList.number+1}"></span>/<span th:text="${contractDetailList.totalPages}"></span>
+    <a th:if="${contractDetailList.hasNext()}"
+       th:href="@{'/contractdetail'(page=${contractDetailList.number+1})}">Next</a>
+</div>
+
+</body>
+</html>

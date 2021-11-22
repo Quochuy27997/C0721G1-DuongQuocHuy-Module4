@@ -24,10 +24,10 @@ public class ContractController {
     IEmployeeService iEmployeeService;
     @Autowired
     IAppServiceService iAppServiceService;
-//    @ModelAttribute("contractList")
-//    public Iterable<Contract> contracts() {
-//        return iContractService.findAll();
-//    }
+    @ModelAttribute("contractList")
+    public Iterable<Contract> contracts() {
+        return iContractService.findAll();
+    }
     @ModelAttribute("customerList")
     public Iterable<Customer> customers() {
         return iCustomerService.findAll();
@@ -45,7 +45,7 @@ public class ContractController {
 
         ModelAndView modelAndView = new ModelAndView("/contract/list");
 
-        modelAndView.addObject("contractList", contractList);
+         modelAndView.addObject("contractList", contractList);
 
         return modelAndView;
     }
