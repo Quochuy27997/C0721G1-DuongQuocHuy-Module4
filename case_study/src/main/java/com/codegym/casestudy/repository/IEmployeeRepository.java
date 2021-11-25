@@ -9,7 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface IEmployeeRepository extends JpaRepository<Employee,Long> {
-    @Query(value="select * from employee where `name` like :name and position_id like :position_id and education_degree like :education_degree_id " +
+    @Query(value="select * from employee where `name` like :name and position_id like :position_id and education_degree" +
+            " like :education_degree_id " +
             "and division like :division_id" ,nativeQuery=true)
-    Page<Employee> searchAll(Pageable pageable, @Param("name") String name, @Param("position_id") String position,@Param("education_degree_id") String educationDegree,@Param("division_id") String division);
+    Page<Employee> searchAll(Pageable pageable, @Param("name") String name, @Param("position_id") String position,
+                             @Param("education_degree_id") String educationDegree,@Param("division_id") String division);
 }

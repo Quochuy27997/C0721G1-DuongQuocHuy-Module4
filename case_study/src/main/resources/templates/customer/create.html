@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/assert/bootstrap413/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assert/datatables/css/dataTables.bootstrap4.min.css">
 </head>
 <body>
 <div><a th:href="@{/customers}">back to list</a></div>
-<form th:action="@{/customers/create-customer}" th:object="${customer}" method="post">
-    <table>
+<div style="color: red" th:if="${message}" th:text="${message}"></div>
+<form th:action="@{/customers/create-customer}" th:object="${customerDto}" method="post">
+    <table border="1" cellpadding="5">
         <tr>
             <td>Code</td>
             <td><input type="text" th:field="*{code}"></td>
+            <td style="color: red" th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></td>
         </tr>
         <tr>
             <td>Name</td>
@@ -31,14 +37,17 @@
         <tr>
             <td>ID Card</td>
             <td><input type="text" th:field="*{idCard}"></td>
+            <td style="color: red" th:if="${#fields.hasErrors('idCard')}" th:errors="*{idCard}"></td>
         </tr>
         <tr>
             <td>Phone</td>
             <td><input type="text" th:field="*{phone}"></td>
+            <td style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></td>
         </tr>
         <tr>
             <td>Email</td>
             <td><input type="text" th:field="*{email}"></td>
+            <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></td>
         </tr>
         <tr>
             <td>Address</td>
@@ -64,5 +73,12 @@
         </tr>
     </table>
 </form>
+
+<script src="/assert/jquery/jquery-3.5.1.min.js"></script>
+<script src="/assert/bootstrap413/js/popper.min.js"></script>
+<script src="/assert/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/assert/datatables/js/dataTables.bootstrap4.min.js"></script>
+<script src="/assert/bootstrap413/js/bootstrap.min.js"></script>
+<script src="/assert/bootstrap413/js/bootstrap.bundle.js"></script>
 </body>
 </html>

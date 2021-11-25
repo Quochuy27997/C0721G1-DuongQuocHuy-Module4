@@ -92,8 +92,8 @@ public class EmployeeController {
 //        modelAndView.addObject("customerList", customerList);
         return modelAndView;
     }
-    @GetMapping("/delete-employee/{id}")
-    public ModelAndView delete(@PathVariable Long id, @PageableDefault(value = 3) Pageable pageable) {
+    @GetMapping("/delete")
+    public ModelAndView delete(@RequestParam("id") Long id, @PageableDefault(value = 3) Pageable pageable) {
         iEmployeeService.delete(id);
         Iterable<Employee> employeeList = iEmployeeService.findAll(pageable);
         ModelAndView modelAndView = new ModelAndView("/employee/list");

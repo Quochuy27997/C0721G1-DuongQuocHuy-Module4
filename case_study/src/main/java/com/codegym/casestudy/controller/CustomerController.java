@@ -1,18 +1,23 @@
 package com.codegym.casestudy.controller;
 
+import com.codegym.casestudy.dto.CustomerDto;
 import com.codegym.casestudy.model.Customer;
 import com.codegym.casestudy.model.CustomerType;
 import com.codegym.casestudy.service.ICustomerService;
 import com.codegym.casestudy.service.ICustomerTypeService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/customers")
@@ -45,17 +50,28 @@ public class CustomerController {
 
     @GetMapping("/create-customer")
     public ModelAndView showBlogForm() {
+        CustomerDto customerDto=new CustomerDto();
         ModelAndView modelAndView = new ModelAndView("/customer/create");
-        modelAndView.addObject("customer", new Customer());
+        modelAndView.addObject("customerDto", customerDto);
         return modelAndView;
     }
 
     @PostMapping("/create-customer")
-    public ModelAndView save(@ModelAttribute Customer customer) {
-
-        iCustomerService.save(customer);
+    public ModelAndView save(@ModelAttribute  @Validated CustomerDto customerDto, BindingResult bindingResult) {
+        List<Customer> customerList = iCustomerService.findAll();
+        customerDto.setCustomerList(customerList);
+        new CustomerDto().validate(customerDto, bindingResult);
+//        iCustomerService.save(customer);
 
         ModelAndView modelAndView = new ModelAndView("/customer/create");
+
+        if (!bindingResult.hasFieldErrors()) {
+            Customer customer = new Customer();
+            BeanUtils.copyProperties(customerDto, customer);
+            iCustomerService.save(customer);
+            modelAndView.addObject("message", "Add Completed!");
+        }
+
 //        modelAndView.addObject("customerList", customerList);
         return modelAndView;
     }
@@ -64,22 +80,39 @@ public class CustomerController {
     public ModelAndView showEdit(@PathVariable Long id) {
         Customer customer = iCustomerService.findById(id);
         ModelAndView modelAndView = new ModelAndView("/customer/edit");
-        modelAndView.addObject("customer", customer);
+        CustomerDto customerDto = new CustomerDto();
+        BeanUtils.copyProperties(customer, customerDto);
+        modelAndView.addObject("customerDto", customerDto);
+
         return modelAndView;
 
     }
 
     @PostMapping("/edit-customer")
-    public ModelAndView update(@ModelAttribute Customer customer) {
+    public ModelAndView update(@ModelAttribute @Validated CustomerDto customerDto, BindingResult bindingResult) {
 
-        iCustomerService.update(customer);
+        List<Customer> customerList = iCustomerService.findAll();
+        for(int i=0;i<customerList.size();i++){
+            if(customerList.get(i).getId()== customerDto.getId()){
+                customerList.remove(customerList.get(i));
+            }
+        }
+        customerDto.setCustomerList(customerList);
+        new CustomerDto().validate(customerDto, bindingResult);
+//        iCustomerService.update(customer);
 
         ModelAndView modelAndView = new ModelAndView("/customer/edit");
+        if (!bindingResult.hasFieldErrors()) {
+            Customer customer = new Customer();
+            BeanUtils.copyProperties(customerDto, customer);
+            iCustomerService.save(customer);
+            modelAndView.addObject("message", "Edit Completed!");
+        }
 //        modelAndView.addObject("customerList", customerList);
         return modelAndView;
     }
-    @GetMapping("/delete-customer/{id}")
-    public ModelAndView delete(@PathVariable Long id, @PageableDefault(value = 3) Pageable pageable) {
+    @GetMapping("/delete")
+    public ModelAndView delete(@RequestParam("id") Long id, @PageableDefault(value = 3) Pageable pageable) {
         iCustomerService.delete(id);
         Iterable<Customer> customerList = iCustomerService.findAll(pageable);
         ModelAndView modelAndView = new ModelAndView("/customer/list");

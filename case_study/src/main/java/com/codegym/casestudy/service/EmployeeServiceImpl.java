@@ -46,7 +46,8 @@ public class EmployeeServiceImpl implements IEmployeeService {
 
     @Override
     public Page<Employee> searchAll(Pageable pageable, String name, String idPosition, String idEducationDegree, String idDivision) {
-        return iEmployeeRepository.searchAll(pageable,"%"+name+"%","%"+idPosition+"%","%"+idEducationDegree+"%","%"+idDivision+"%");
+       Page<Employee> employeePage=  iEmployeeRepository.searchAll(pageable,"%"+name+"%","%"+idPosition+"%","%"+idEducationDegree+"%","%"+idDivision+"%");
+   return employeePage;
     }
 
 

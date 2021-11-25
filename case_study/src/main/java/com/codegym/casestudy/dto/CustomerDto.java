@@ -1,5 +1,6 @@
 package com.codegym.casestudy.dto;
 
+import com.codegym.casestudy.model.Contract;
 import com.codegym.casestudy.model.Customer;
 import com.codegym.casestudy.model.CustomerType;
 import org.springframework.validation.Errors;
@@ -8,34 +9,34 @@ import org.springframework.validation.Validator;
 import javax.validation.constraints.Pattern;
 import java.util.List;
 
-public class CustomerDTO implements Validator {
+public class CustomerDto implements Validator {
     private Long id;
+    @Pattern(regexp = "^[K][H][-]\\d{4}", message = "Please enter the correct format for customer code 'KH-XXXX' !")
     private String code;
-    @Pattern(regexp = "([\\p{Lu}][\\p{Ll}]{1,8})(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$",message = "Wrong name format, please enter again ! ")
     private String name;
     private String birthDate;
     private int gender;
-    @Pattern(regexp = "\\d{9}",message = "Please enter again, id card is 9-digit string !")
+    @Pattern(regexp = "\\d{9}", message = "Please enter again, id card is 9-digit string !")
     private String idCard;
-    @Pattern(regexp = "\\d{10}",message ="Please enter again, number phone is 10-digit string !" )
+    @Pattern(regexp = "\\d{10}", message = "Please enter again, number phone is 10-digit string !")
     private String phone;
-    @Pattern(regexp = "^[A-z]{1}((\\w)*[.]?(\\w)*|(\\w)*[-]?(\\w)*)@[a-z0-9]+([.][a-z]{2,3}){1,5}",message = "Wrong email format (xxx@xxxx.com), please enter again !")
+    @Pattern(regexp = "^[A-z]{1}((\\w)*[.]?(\\w)*|(\\w)*[-]?(\\w)*)@[a-z0-9]+([.][a-z]{2,3}){1,5}", message = "Wrong email format (xxx@xxxx.com), please enter again !")
     private String email;
-    @Pattern(regexp = "([\\p{Lu}][\\p{Ll}]{1,8})(\\s([\\p{Lu}]|[\\p{Lu}][\\p{Ll}]{1,10})){0,5}$",message = "Wrong address format, please enter again !")
     private String address;
     private CustomerType customerType;
 
-    private List<Customer> customers;
+    private List<Customer> customerList;
+    private List<Contract> contractList;
 
-    public List<Customer> getCustomers() {
-        return customers;
+    public List<Customer> getCustomerList() {
+        return customerList;
     }
 
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
+    public void setCustomerList(List<Customer> customerList) {
+        this.customerList = customerList;
     }
 
-    public CustomerDTO() {
+    public CustomerDto() {
     }
 
     public Long getId() {
@@ -118,6 +119,15 @@ public class CustomerDTO implements Validator {
         this.customerType = customerType;
     }
 
+    public List<Contract> getContractList() {
+        return contractList;
+    }
+
+    public void setContractList(List<Contract> contractList) {
+        this.contractList = contractList;
+    }
+
+
     @Override
     public boolean supports(Class<?> clazz) {
         return false;
@@ -125,25 +135,20 @@ public class CustomerDTO implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        CustomerDTO customerDTO = (CustomerDTO) target;
-        List<Customer> customerList= customerDTO.getCustomers();
-        Long i = customerDTO.getId();
-        for (int j = 0; j < customerList.size(); j++) {
-            if(customerList.get(j).getId()==i){
-                customerList.remove(j);
-                break;
-            }
+        CustomerDto customerDTO = (CustomerDto) target;
 
-        }
-        for(Customer customer:customerList){
-            if(customerDTO.getIdCard().equals(customer.getIdCard())){
-                errors.rejectValue("idCard","sameIdCard","ID Card is exist, please enter another ID Card !");
+        for (Customer customer : customerDTO.getCustomerList()) {
+            if (customer.getIdCard().equals(customerDTO.getIdCard())) {
+                errors.rejectValue("idCard", "sameIdCard", "ID Card is exist, please enter another ID Card !");
             }
-            if(customerDTO.getEmail().equals(customer.getEmail())){
-                errors.rejectValue("email","sameEmail","Email is exist, please enter another Email !");
+            if (customer.getPhone().equals(customerDTO.getPhone())) {
+                errors.rejectValue("phone", "samePhone", "Number Phone is exist, please enter another Number Phone !");
             }
-            if(customerDTO.getPhone().equals(customer.getPhone())){
-                errors.rejectValue("phone","samePhone","Number Phone is exist, please enter another Number Phone !");
+            if (customer.getEmail().equals(customerDTO.getEmail())) {
+                errors.rejectValue("email", "sameEmail", "Email is exist, please enter another Email !");
+            }
+            if (customer.getCode().equals(customerDTO.getCode())) {
+                errors.rejectValue("code", "sameCode", "Code is exist, please enter another Code !");
             }
         }
     }
