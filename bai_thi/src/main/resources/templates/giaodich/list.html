@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%7CVarela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet prefetch"
+          href="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+</head>
+<body>
+<!--<h1>Blog</h1>-->
+<!--<a href="/customers/create-customer" type="button" class="btn btn-primary btn-lg">Add</a>-->
+<!--<form>-->
+<!--    <input type="search" name="name" placeholder="search by name">-->
+<!--    <select name="idCustomerType">-->
+<!--        <option selected value="">Chọn</option>-->
+
+<!--        <option th:each="customerType:${customerTypeList}" th:text="${customerType.name}" th:value="${customerType.id}">-->
+
+<!--        </option>-->
+
+<!--    </select>-->
+
+<!--    <input type="submit" value="Search">-->
+<!--</form>-->
+<table border="1" cellpadding="5"  class="table table-striped">
+    <tr>
+        <td>STT</td>
+        <td>Code</td>
+       <th>Name</th>
+        <th>Ngày Giao Dich</th>
+        <th>Loai Dich Vụ</th>
+        <th>Đơn Giá</th>
+        <th>Diện Tích</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    <tr th:each="giaodich,index:${giaoDichList}">
+        <td th:text="${giaodich.id}"></td>
+        <td th:text="${giaodich.code}"></td>
+        <td th:text="${giaodich.khachHang.name}"></td>
+        <td th:text="${giaodich.ngayGiaoDich}"></td>
+        <td th:text="${giaodich.loaiDichVu}"></td>
+        <td th:text="${giaodich.donGia}"></td>
+        <td th:text="${giaodich.dienTich}"></td>
+
+
+
+        <td><a th:href="@{/customers/edit-customer/{id}(id=${customer.id})}" type="button" class="btn btn-primary btn-lg">Edit</a></td>
+<!--        <td><a th:href="@{/customers/delete-customer/{id}(id=${customer.id})}">Delete</a></td>-->
+<!--        <td>-->
+<!--            <button onclick="setValueFormDelete('${customer.id}')" class="btn btn-danger" data-toggle="modal"-->
+<!--                    data-target="#modalDelete">Delete-->
+<!--            </button>-->
+<!--        </td>-->
+<!--        <td>-->
+<!--            <button th:onclick="|onDelete(${customer.id})|" type="button" class="btn btn-primary btn-lg"-->
+<!--                    data-toggle="modal" data-target="#modalDelete">-->
+<!--                Delete-->
+<!--            </button>-->
+<!--        </td>-->
+
+    </tr>
+</table>
+<!--<div>-->
+<!--  <a th:if="${customerList.hasPrevious() }"-->
+<!--       th:href="@{'/customers'(page=${customerList.number-1},name=${name},idCustomerType=${customerTypeId})}">previous</a>-->
+<!--    <span th:text="${customerList.number+1}"></span>/<span th:text="${customerList.totalPages}"></span>-->
+<!--    <a th:if="${customerList.hasNext()}"-->
+<!--       th:href="@{'/customers'(page=${customerList.number+1},name=${name},idCustomerType=${customerTypeId})}">Next</a>-->
+<!--</div>-->
+
+
+<!--&lt;!&ndash; Modal Delete &ndash;&gt;-->
+<!--<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">-->
+<!--    <div class="modal-dialog" role="document">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title">Modal title</h5>-->
+<!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                    <span aria-hidden="true">&times;</span>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                Are you want to delete?-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <form action="/customers/delete" method="get">-->
+<!--                    <input type="hidden" id="idCustomer" name="id">-->
+<!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--                    <button type="submit" class="btn btn-primary">Delete</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+
+<!--&lt;!&ndash;<script src="/assert/jquery/jquery-3.5.1.min.js"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;<script src="/assert/bootstrap413/js/popper.min.js"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;<script src="/assert/datatables/js/jquery.dataTables.min.js"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;<script src="/assert/datatables/js/dataTables.bootstrap4.min.js"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;<script src="/assert/bootstrap413/js/bootstrap.min.js"></script>&ndash;&gt;-->
+<!--&lt;!&ndash;<script src="/assert/bootstrap413/js/bootstrap.bundle.js"></script>&ndash;&gt;-->
+
+<!--<script>-->
+<!--    function onDelete(id) {-->
+<!--        document.getElementById("idCustomer").value = id;-->
+<!--        // alert(id)-->
+<!--    }-->
+
+<!--    function onSearch() {-->
+<!--        let a = document.getElementById("select").value;-->
+<!--        document.getElementById("idSearch").value = a;-->
+<!--    }-->
+
+<!--    $(document).ready(function () {-->
+<!--        $('#tableCustomer').dataTable({-->
+<!--            "dom": 'lrtip',-->
+<!--            "lengthChange": false,-->
+<!--            "pageLength": 5-->
+<!--        });-->
+<!--    });-->
+
+<!--    $('#exampleModal').on('show.bs.modal', event => {-->
+<!--        var button = $(event.relatedTarget);-->
+<!--        var modal = $(this);-->
+<!--    });-->
+<!--</script>-->
+</body>
+</html>
